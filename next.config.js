@@ -1,11 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export',
+  reactStrictMode: false,
   images: {
     unoptimized: true,
   },
-  basePath: '/3d_space',
-  assetPrefix: '/3d_space/',
 }
 
 module.exports = nextConfig 
