@@ -15,7 +15,7 @@ import { OrbitControls } from "@react-three/drei";
 import { MeshStandardMaterial } from "three";
 import { Room } from "./components/Room";
 import { folder, useControls } from "leva";
-import AutoLayout from "./components/AutoLayout";
+import { AutoLayout, Direction, AlignObj } from "./components/AutoLayout";
 
 export default function Home() {
   const {
@@ -23,7 +23,7 @@ export default function Home() {
     rotation,
     hiddenRoom,
     debug,
-    direction,
+    itemDirection,
     gap,
     itemPadding,
     align0x,
@@ -43,7 +43,7 @@ export default function Home() {
     layout: folder({
       gap: 0,
       debug: true,
-      direction: { options: ["x", "y", "z"], value: "x" },
+      itemDirection: { options: ["x", "y", "z"], value: "x" },
       itemPadding: { value: [0.5, 1.5, 0] },
       align0x: { options: ["start", "center", "end"], value: "start" },
       align0y: { options: ["start", "center", "end"], value: "center" },
@@ -107,9 +107,9 @@ export default function Home() {
             height={6}
             depth={4}
             gap={gap}
-            direction={direction}
+            direction={itemDirection as Direction}
             itemPadding={itemPadding}
-            itemAligns={itemAligns}
+            itemAligns={itemAligns as AlignObj[]}
             itemOffsets={itemOffsets}
             debug={debug}
           >

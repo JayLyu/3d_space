@@ -2,11 +2,11 @@
 import React, { ReactNode } from 'react';
 import { Vector3, BoxGeometry, LineBasicMaterial, LineSegments, EdgesGeometry, MeshBasicMaterial, Mesh } from 'three';
 
-type Alignment = 'start' | 'center' | 'end';
-type Direction = 'x' | 'y' | 'z';
-type AlignObj = { x?: Alignment; y?: Alignment; z?: Alignment };
-type OffsetObj = { x?: number; y?: number; z?: number };
-type Padding = number | [number, number, number];
+export type Alignment = 'start' | 'center' | 'end';
+export type Direction = 'x' | 'y' | 'z';
+export type AlignObj = { x?: Alignment; y?: Alignment; z?: Alignment };
+export type OffsetObj = { x?: number; y?: number; z?: number };
+export type Padding = number | [number, number, number];
 
 interface AutoLayoutProps {
   width?: number;
@@ -178,4 +178,4 @@ const AutoLayout: React.FC<AutoLayoutProps> = ({
   );
 };
 
-export default AutoLayout; 
+export {AutoLayout}; 
