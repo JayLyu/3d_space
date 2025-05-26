@@ -6,6 +6,7 @@ const nextConfig = {
     unoptimized: true,
   },
   basePath: process.env.NODE_ENV === 'production' ? '/3d_space' : '',
+  assetPrefix: process.env.NODE_ENV === 'production' ? '/3d_space/' : '',
 }
 
 module.exports = nextConfig 

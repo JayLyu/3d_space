@@ -143,7 +143,7 @@ export default function Home() {
       </Suspense>
       <axesHelper args={[10]} />
       <Environment
-        files="/studio.hdr"
+        files={process.env.NODE_ENV === 'production' ? '/3d_space/studio.hdr' : '/studio.hdr'}
         environmentIntensity={0.2}
         background={false}
       />
