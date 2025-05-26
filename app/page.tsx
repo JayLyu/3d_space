@@ -21,6 +21,7 @@ export default function Home() {
   const {
     effect,
     rotation,
+    hiddenRoom,
     debug,
     direction,
     gap,
@@ -37,6 +38,7 @@ export default function Home() {
     camera: folder({
       effect: false,
       rotation: false,
+      hiddenRoom: true,
     }, { collapsed: true}),
     layout: folder({
       gap: 0,
@@ -98,22 +100,22 @@ export default function Home() {
         shadow-camera-top={10}
         shadow-camera-bottom={-10}
       />
-      <AutoLayout
-        width={10}
-        height={6}
-        depth={4}
-        gap={gap}
-        direction={direction}
-        itemPadding={itemPadding}
-        itemAligns={itemAligns}
-        itemOffsets={itemOffsets}
-        debug={debug}
-      >
-        <Box />
-        <Box />
-      </AutoLayout>
-      {/* <Suspense fallback={<Html center>Loading.</Html>}>
+      <Suspense fallback={<Html center>Loading.</Html>}>
         <Center>
+          <AutoLayout
+            width={10}
+            height={6}
+            depth={4}
+            gap={gap}
+            direction={direction}
+            itemPadding={itemPadding}
+            itemAligns={itemAligns}
+            itemOffsets={itemOffsets}
+            debug={debug}
+          >
+            <Box />
+            <Box />
+          </AutoLayout>
           <Room 
             material={roomMaterial}
             width={10}
@@ -122,13 +124,15 @@ export default function Home() {
             wallThickness={0.1}
             doorWidth={5}
             doorHeight={3}
+            visible={hiddenRoom}
             // position={[0, 2, 0]}
           />
-          <Box position={[2, 2, 2]}>
+          <Box position={[2, 2, 2]} visible={hiddenRoom}>
             <meshStandardMaterial color="#000" />
           </Box>
           <Plane
             receiveShadow
+            visible={hiddenRoom}
             args={[20, 20]}
             position={[0, -2, 0]}
             rotation={[-Math.PI / 2, 0, 0]}
@@ -136,7 +140,7 @@ export default function Home() {
             <meshStandardMaterial color="#999999" roughness={0.5} metalness={0.5} />
           </Plane>
         </Center>
-      </Suspense> */}
+      </Suspense>
       <axesHelper args={[10]} />
       <Environment
         files="/studio.hdr"

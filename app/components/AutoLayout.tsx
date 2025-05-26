@@ -1,17 +1,4 @@
-/**
- * AutoLayout 3D 自动布局组件
- *
- * 支持每个子容器的padding、对齐、偏移。
- *
- * Props:
- * - width/height/depth: 主容器尺寸
- * - direction: 分割主轴（'x'|'y'|'z'）
- * - itemPadding: 子容器内边距，单值或[x, y, z]
- * - itemAligns: 每个子元素的对齐方式数组（{x, y, z}）
- * - itemOffsets: 每个子元素的偏移数组（{x, y, z}）
- * - debug: 是否显示 wireframe
- * - children: 3D 子元素
- */
+
 import React, { ReactNode } from 'react';
 import { Vector3, BoxGeometry, LineBasicMaterial, LineSegments, EdgesGeometry, MeshBasicMaterial, Mesh } from 'three';
 
@@ -51,6 +38,20 @@ const DEBUG_COLORS = {
   usable: '#00ff00',    // 子容器内可用空间 蓝
 };
 
+/**
+ * AutoLayout 3D 自动布局组件
+ *
+ * 支持每个子容器的padding、对齐、偏移。
+ *
+ * Props:
+ * - width/height/depth: 主容器尺寸
+ * - direction: 分割主轴（'x'|'y'|'z'）
+ * - itemPadding: 子容器内边距，单值或[x, y, z]
+ * - itemAligns: 每个子元素的对齐方式数组（{x, y, z}）
+ * - itemOffsets: 每个子元素的偏移数组（{x, y, z}）
+ * - debug: 是否显示 wireframe
+ * - children: 3D 子元素
+ */
 const AutoLayout: React.FC<AutoLayoutProps> = ({
   width = 10,
   height = 10,
