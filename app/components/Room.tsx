@@ -1,7 +1,4 @@
 import { useRef } from "react";
-import {
-  Material,
-} from "three";
 import { Geometry, Base, Subtraction } from "@react-three/csg";
 import { PivotControls } from "@react-three/drei";
 import * as THREE from "three";
@@ -17,7 +14,7 @@ interface RoomProps {
 
 const box = new THREE.BoxGeometry();
 
-const Door = (props) => (
+const Door = (props: React.PropsWithChildren<React.ComponentProps<typeof Subtraction>>) => (
   <Subtraction {...props}>
     <Geometry>
       <Base geometry={box} scale={[1, 2, 1]} />
@@ -32,7 +29,8 @@ export function Room({
   doorWidth = 2,
   doorHeight = 3,
   ...props
-}: RoomProps) {
+}: RoomProps & React.ComponentProps<'mesh'>) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const csgRef = useRef<any>(null);
 
 
@@ -64,7 +62,7 @@ export function Room({
         scale={1} 
         annotations
         anchor={[0, 0, 0]} 
-        onDrag={() => csgRef.current.update()}>
+        onDrag={() => csgRef.current?.update()}>
           <Door 
           rotation={[0, 0, 0]} 
           position={[0, -height / 2 + doorHeight / 2, depth / 2]}
