@@ -10,29 +10,59 @@ import {
   Vignette,
 } from "@react-three/postprocessing";
 import { Canvas } from "@react-three/fiber";
-import {
-  Html,
-  Environment,
-  Plane,
-  Box,
-  Center,
-} from "@react-three/drei";
+import { Html, Environment, Plane, Box, Center } from "@react-three/drei";
 import { OrbitControls } from "@react-three/drei";
 import { MeshStandardMaterial } from "three";
 import { Room } from "./components/Room";
 import { folder, useControls } from "leva";
+import AutoLayout from "./components/AutoLayout";
 
 export default function Home() {
-
-  const { effect, rotation } = useControls({
-    effect: false,
+  const {
+    effect,
+    rotation,
+    debug,
+    direction,
+    gap,
+    itemPadding,
+    align0x,
+    align0y,
+    align0z,
+    align1x,
+    align1y,
+    align1z,
+    offset0,
+    offset1,
+  } = useControls({
     camera: folder({
-      rotation: false
-    })
-  })
+      effect: false,
+      rotation: false,
+    }, { collapsed: true}),
+    layout: folder({
+      gap: 0,
+      debug: true,
+      direction: { options: ["x", "y", "z"], value: "x" },
+      itemPadding: { value: [0.5, 1.5, 0] },
+      align0x: { options: ["start", "center", "end"], value: "start" },
+      align0y: { options: ["start", "center", "end"], value: "center" },
+      align0z: { options: ["start", "center", "end"], value: "center" },
+      align1x: { options: ["start", "center", "end"], value: "end" },
+      align1y: { options: ["start", "center", "end"], value: "end" },
+      align1z: { options: ["start", "center", "end"], value: "center" },
+      offset0: { value: { x: 0.2, y: 0, z: 0 } },
+      offset1: { value: { x: -0.2, y: 0.1, z: 0 } },
+    }),
+  });
+
+  const itemAligns = [
+    { x: align0x, y: align0y, z: align0z },
+    { x: align1x, y: align1y, z: align1z },
+  ];
+  const itemOffsets = [offset0, offset1];
+
   // 创建自定义材质
   const roomMaterial = new MeshStandardMaterial({
-    color: '#fff',
+    color: "#fff",
     roughness: 0.8,
     metalness: 0.2,
     // envMap: useCubeTexture(
@@ -54,10 +84,8 @@ export default function Home() {
         far: 1000,
       }}
     >
-      <OrbitControls 
-        enableRotate={rotation}
-      />
-      <color attach="background" args={['skyblue']} />
+      <OrbitControls enableRotate={rotation} />
+      <color attach="background" args={["#fff"]} />
       <ambientLight intensity={0.2} />
       <directionalLight
         position={[15, 15, 15]}
@@ -70,7 +98,21 @@ export default function Home() {
         shadow-camera-top={10}
         shadow-camera-bottom={-10}
       />
-      <Suspense fallback={<Html center>Loading.</Html>}>
+      <AutoLayout
+        width={10}
+        height={6}
+        depth={4}
+        gap={gap}
+        direction={direction}
+        itemPadding={itemPadding}
+        itemAligns={itemAligns}
+        itemOffsets={itemOffsets}
+        debug={debug}
+      >
+        <Box />
+        <Box />
+      </AutoLayout>
+      {/* <Suspense fallback={<Html center>Loading.</Html>}>
         <Center>
           <Room 
             material={roomMaterial}
@@ -94,9 +136,9 @@ export default function Home() {
             <meshStandardMaterial color="#999999" roughness={0.5} metalness={0.5} />
           </Plane>
         </Center>
-      </Suspense>
+      </Suspense> */}
       <axesHelper args={[10]} />
-      <Environment 
+      <Environment
         files="/studio.hdr"
         environmentIntensity={0.2}
         background={false}
@@ -109,11 +151,7 @@ export default function Home() {
             bokehScale={2}
             height={480}
           />
-          <Bloom 
-            luminanceThreshold={0}
-            luminanceSmoothing={0.9}
-            height={300}
-          />
+          <Bloom luminanceThreshold={0} luminanceSmoothing={0.9} height={300} />
           <Noise opacity={0.02} />
           <Vignette eskil={false} offset={0.1} darkness={1.1} />
         </EffectComposer>
